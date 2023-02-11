@@ -1,0 +1,8 @@
+__pycache__/
+.vscode
+*.py[cod]
+env/*
+.venv/*
+config.py
+*.log
+.env
