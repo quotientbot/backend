@@ -1,7 +1,6 @@
 from fastapi import APIRouter, responses
 from decouple import config
 
-
 router = APIRouter()
 
 
