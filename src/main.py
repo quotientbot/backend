@@ -12,7 +12,8 @@ async def verify_key(key: str = Depends(api_scheme)):
 
 
 app = FastAPI(debug=True)
-app.include_router(auth.router, prefix="/auth", dependencies=[Depends(verify_key)])
+# dependencies=[Depends(verify_key)]
+app.include_router(auth.router, prefix="/auth")
 
 
 if __name__ == "__main__":

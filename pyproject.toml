@@ -12,6 +12,7 @@ fastapi = "^0.90.0"
 tortoise-orm = "^0.19.3"
 python-decouple = "^3.7"
 uvicorn = "^0.20.0"
+starlette-discord = "^0.2.1"
 
 
 [build-system]
