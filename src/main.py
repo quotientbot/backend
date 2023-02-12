@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from decouple import config
 from fastapi.security import APIKeyHeader
-from routes import auth
+from routes import auth, user
 
 api_scheme = APIKeyHeader(name="authorization")
 
@@ -12,9 +12,10 @@ async def verify_key(key: str = Depends(api_scheme)):
 
 
 app = FastAPI(debug=True)
+
 # dependencies=[Depends(verify_key)]
 app.include_router(auth.router, prefix="/auth")
-
+app.include_router(user.router, prefix="/user")
 
 if __name__ == "__main__":
     import uvicorn
