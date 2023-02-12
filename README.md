@@ -1,5 +1,5 @@
 # backend
 
-## todos:
+### todos:
 
-[ ] Use ttl cache to store a user's guild to save time
+- [ ] Use ttl cache to store a user's guild to save time
