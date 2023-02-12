@@ -66,3 +66,11 @@ async def get_user(code: str):
     guilds = await get_user_guilds_from_discord(access_token)
     user["guilds"] = guilds
     return user
+
+
+@router.get("/@db")
+async def get_user_from_db(user_id: str):
+    """
+    Get the user's data from the database.
+    """
+    ...
