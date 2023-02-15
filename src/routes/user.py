@@ -19,9 +19,7 @@ async def exchange_code(code: str) -> dict:
     }
 
     async with aiohttp.ClientSession() as session:
-        async with session.post(
-            config("DISCORD_API") + "/oauth2/token", data=data, headers=headers
-        ) as res:
+        async with session.post(config("DISCORD_API") + "/oauth2/token", data=data, headers=headers) as res:
             return await res.json()
 
 
@@ -32,9 +30,7 @@ async def get_user_from_discord(access_token: str):
     headers = {"Authorization": "Bearer {}".format(access_token)}
 
     async with aiohttp.ClientSession() as session:
-        async with session.get(
-            config("DISCORD_API") + "/users/@me", headers=headers
-        ) as response:
+        async with session.get(config("DISCORD_API") + "/users/@me", headers=headers) as response:
             return await response.json()
 
 
@@ -45,14 +41,23 @@ async def get_user_guilds_from_discord(access_token: str):
     headers = {"Authorization": "Bearer {}".format(access_token)}
 
     async with aiohttp.ClientSession() as session:
-        async with session.get(
-            config("DISCORD_API") + "/users/@me/guilds", headers=headers
-        ) as response:
+        async with session.get(config("DISCORD_API") + "/users/@me/guilds", headers=headers) as response:
             return await response.json()
 
 
+async def get_bot_guilds_from_discord():
+    headers = {"Authorization": f"Bot {config('BOT_TOKEN')}"}
+    async with aiohttp.ClientSession() as session:
+        async with session.get(config("DISCORD_API") + "/users/@me/guilds", headers=headers) as response:
+            if response.status == 200:
+                data = await response.json()
+                return data
+            else:
+                raise Exception(f"Error fetching guilds: {response.status} {await response.text()}")
+
+
 @router.get("/@me")
-async def get_user(code: str):
+async def get_user(code: str, checkPerms: bool = True):
     """
     Get the user's data & guilds from discord.
     """
@@ -63,8 +68,10 @@ async def get_user(code: str):
         return response
 
     user = await get_user_from_discord(access_token)
-    guilds = await get_user_guilds_from_discord(access_token)
-    user["guilds"] = guilds
+    user_guilds = await get_user_guilds_from_discord(access_token)
+    bot_guilds = await get_bot_guilds_from_discord()
+    
+    # user["guilds"] = guilds
     return user
 
 
