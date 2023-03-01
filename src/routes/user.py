@@ -70,8 +70,9 @@ async def get_user(code: str, checkPerms: bool = True):
     user = await get_user_from_discord(access_token)
     user_guilds = await get_user_guilds_from_discord(access_token)
     bot_guilds = await get_bot_guilds_from_discord()
-    
+
     # user["guilds"] = guilds
+
     return user
 
 
