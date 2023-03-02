@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 import aiohttp
 from decouple import config
+import typing as T
 
 router = APIRouter()
 
@@ -56,6 +57,17 @@ async def get_bot_guilds_from_discord():
                 raise Exception(f"Error fetching guilds: {response.status} {await response.text()}")
 
 
+async def match_guilds(user_guilds, bot_guilds) -> T.List:
+    selected_guilds = []
+    for g in user_guilds:
+        if int(g["permissions"]) & 0x00000020:
+            for b in bot_guilds:
+                if g["id"] == b["id"]:
+                    selected_guilds.append(g)
+
+    return selected_guilds
+
+
 @router.get("/@me")
 async def get_user(code: str, checkPerms: bool = True):
     """
@@ -71,8 +83,9 @@ async def get_user(code: str, checkPerms: bool = True):
     user_guilds = await get_user_guilds_from_discord(access_token)
     bot_guilds = await get_bot_guilds_from_discord()
 
-    # user["guilds"] = guilds
+    user["guilds"] = await match_guilds(user_guilds, bot_guilds)
 
+    print(user)
     return user
 
 
