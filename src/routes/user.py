@@ -1,5 +1,6 @@
 from fastapi import APIRouter
-import aiohttp
+
+from utils import http_client
 from decouple import config
 import typing as T
 
@@ -20,9 +21,9 @@ async def exchange_code(code: str) -> dict:
         "redirect_uri": config("REDIRECT_URI"),
     }
 
-    async with aiohttp.ClientSession() as session:
-        async with session.post(config("DISCORD_API") + "/oauth2/token", data=data, headers=headers) as res:
-            return await res.json()
+    return await http_client.SingletonAiohttp.query_url(
+        config("DISCORD_API") + "/oauth2/token", method="POST", data=data, headers=headers
+    )
 
 
 async def get_user_from_discord(access_token: str):
@@ -30,10 +31,7 @@ async def get_user_from_discord(access_token: str):
     Use the access token to fetch user's data from discord.
     """
     headers = {"Authorization": "Bearer {}".format(access_token)}
-
-    async with aiohttp.ClientSession() as session:
-        async with session.get(config("DISCORD_API") + "/users/@me", headers=headers) as response:
-            return await response.json()
+    return await http_client.SingletonAiohttp.query_url(config("DISCORD_API") + "/users/@me", headers=headers)
 
 
 async def get_user_guilds_from_discord(access_token: str):
@@ -41,21 +39,12 @@ async def get_user_guilds_from_discord(access_token: str):
     Use the access token to fetch user's guilds from discord.
     """
     headers = {"Authorization": "Bearer {}".format(access_token)}
-
-    async with aiohttp.ClientSession() as session:
-        async with session.get(config("DISCORD_API") + "/users/@me/guilds", headers=headers) as response:
-            return await response.json()
+    return await http_client.SingletonAiohttp.query_url(config("DISCORD_API") + "/users/@me/guilds", headers=headers)
 
 
 async def get_bot_guilds_from_discord():
     headers = {"Authorization": f"Bot {config('BOT_TOKEN')}"}
-    async with aiohttp.ClientSession() as session:
-        async with session.get(config("DISCORD_API") + "/users/@me/guilds", headers=headers) as response:
-            if response.status == 200:
-                data = await response.json()
-                return data
-            else:
-                raise Exception(f"Error fetching guilds: {response.status} {await response.text()}")
+    return await http_client.SingletonAiohttp.query_url(config("DISCORD_API") + "/users/@me/guilds", headers=headers)
 
 
 async def match_guilds(user_guilds, bot_guilds) -> T.List:
@@ -75,8 +64,10 @@ async def get_user(code: str, checkPerms: bool = True):
     Get the user's data & guilds from discord.
     """
     response = await exchange_code(code)
-    access_token = response.get("access_token")
-    if not access_token:
+
+    try:
+        access_token = response.get("access_token")
+    except:
         print("Access Token Not Found!")
         return response
 
