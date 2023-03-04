@@ -13,6 +13,7 @@ tortoise-orm = "^0.19.3"
 python-decouple = "^3.7"
 uvicorn = "^0.20.0"
 aiohttp = "^3.8.3"
+fastapi-health = "^0.4.0"
 
 
 [build-system]

@@ -5,6 +5,9 @@ from routes import auth, user, guild
 from fastapi.middleware.cors import CORSMiddleware
 from utils import http_client
 
+# from fastapi_health import health
+
+
 api_scheme = APIKeyHeader(name="authorization")
 
 
@@ -21,7 +24,17 @@ async def on_shutdown() -> None:
     await http_client.SingletonAiohttp.close_aiohttp_client()
 
 
+# def pass_condition():
+#     return {"database": "online"}
+
+
+# def sick_condition():
+#     return False
+
+
 app = FastAPI(debug=True, on_startup=[on_start_up], on_shutdown=[on_shutdown])
+# app.add_api_route("/health", health([pass_condition, sick_condition]))
+
 
 # dependencies=[Depends(verify_key)]
 app.include_router(auth.router, prefix="/auth")
