@@ -3,6 +3,7 @@ import aiohttp
 from decouple import config
 import typing as T
 
+__all__ = ("router",)
 router = APIRouter()
 
 
@@ -85,7 +86,6 @@ async def get_user(code: str, checkPerms: bool = True):
 
     user["guilds"] = await match_guilds(user_guilds, bot_guilds)
 
-    print(user)
     return user
 
 

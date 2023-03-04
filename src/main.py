@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from decouple import config
 from fastapi.security import APIKeyHeader
-from routes import auth, user
+from routes import auth, user, guild
 from fastapi.middleware.cors import CORSMiddleware
 
 api_scheme = APIKeyHeader(name="authorization")
@@ -17,6 +17,7 @@ app = FastAPI(debug=True)
 # dependencies=[Depends(verify_key)]
 app.include_router(auth.router, prefix="/auth")
 app.include_router(user.router, prefix="/user")
+app.include_router(guild.router, prefix="/guild")
 
 
 origins = [
