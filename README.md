@@ -1,3 +1,5 @@
+![Language](https://img.shields.io/badge/lang-Python%203.8-green)
+
 # Web-Dashboard's Backend
 
 This repository contains the backend code for the web-dashboard of [Quotient](https://github.com/quotientbot/Quotient-Bot). Although the new dashboard is not yet live and is in the early stages of development, it is set to replace the old backend in the future. The codebase may have bugs, and there is still room for improvement.
@@ -17,7 +19,7 @@ Contributions are always welcome! Please, however, make an issue first if you wa
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
 
