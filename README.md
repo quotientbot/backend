@@ -19,7 +19,7 @@ Contributions are always welcome! Please, however, make an issue first if you wa
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/quotientbot/backend/blob/main/LICENSE) file for details.
 
 ## Acknowledgments
 
