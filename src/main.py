@@ -56,9 +56,9 @@ app.add_middleware(
 )
 
 
-# register_tortoise(
-#     app,
-#     config=TORTOISE_CONF,
-#     generate_schemas=True,
-#     add_exception_handlers=True,
-# )
+register_tortoise(
+    app,
+    config=TORTOISE_CONF,
+    generate_schemas=True,
+    add_exception_handlers=True,
+)

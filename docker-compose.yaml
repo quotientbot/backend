@@ -1,6 +1,7 @@
 version: "3.8"
 services:
   api:
+    network_mode: host
     restart: always
     hostname: api
     build: .
