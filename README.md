@@ -1,8 +1,13 @@
 ![Language](https://img.shields.io/badge/lang-Python%203.8-green)
+![Library](https://img.shields.io/badge/lib-FastAPI%20-gold)
+![Db](https://img.shields.io/badge/db-PostgreSQL-blue)
+![Library](https://img.shields.io/badge/orm-Tortoise%20ORM-purple)
 
 # Web-Dashboard's Backend
 
 This repository contains the backend code for the web-dashboard of [Quotient](https://github.com/quotientbot/Quotient-Bot). Although the new dashboard is not yet live and is in the early stages of development, it is set to replace the old backend in the future. The codebase may have bugs, and there is still room for improvement.
+
+> <b>Frontend code of this project lives [here](https://github.com/quotientbot/frontend)</b>.
 
 The source code here is provided for educational purposes.
 
