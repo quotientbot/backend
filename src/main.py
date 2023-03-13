@@ -1,11 +1,11 @@
 from fastapi import FastAPI, Depends, HTTPException
 from decouple import config
 from fastapi.security import APIKeyHeader
-from routes import auth, user, guild
+from .routes import auth, user, guild
 from fastapi.middleware.cors import CORSMiddleware
-from utils import http_client
+from .utils import http_client
 from tortoise.contrib.fastapi import register_tortoise
-import settings
+from .settings import TORTOISE_CONF
 
 # from fastapi_health import health
 
@@ -56,14 +56,9 @@ app.add_middleware(
 )
 
 
-register_tortoise(
-    app,
-    config=settings.TORTOISE_CONF,
-    generate_schemas=True,
-    add_exception_handlers=True,
-)
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, host=config("API_HOST"), port=int(config("API_PORT")))
+# register_tortoise(
+#     app,
+#     config=TORTOISE_CONF,
+#     generate_schemas=True,
+#     add_exception_handlers=True,
+# )

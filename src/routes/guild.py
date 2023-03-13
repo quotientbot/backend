@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from utils import http_client, cache
+from ..utils import http_client, cache
 from decouple import config
 
 router = APIRouter()

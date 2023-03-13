@@ -20,7 +20,7 @@ TORTOISE_CONF = {
     },
     "apps": {
         "models": {
-            "models": ["models"],
+            "models": ["src.models"],
             "default_connection": "default",
         },
     },

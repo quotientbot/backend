@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from utils import http_client
+from ..utils import http_client
 from decouple import config
 import typing as T
 
